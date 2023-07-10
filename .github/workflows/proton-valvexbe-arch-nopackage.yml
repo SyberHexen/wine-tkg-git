@@ -8,12 +8,15 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: archlinux:latest
+    container: archlinux:20200605
 
     steps:
       - uses: actions/checkout@v2
       - name: Compile
         run: |
+          sed -i 's,mirror.rackspace.com/archlinux/$repo/os/$arch,archive.archlinux.org/repos/2020/08/03/$repo/os/$arch,' /etc/pacman.d/mirrorlist
+          sed -i 's,mirror.leaseweb.net/archlinux/$repo/os/$arch,archive.archlinux.org/repos/2020/08/03/$repo/os/$arch,' /etc/pacman.d/mirrorlist
+          sed -i 's,Required DatabaseOptional,Optional TrustAll,' /etc/pacman.conf
           echo -e "[multilib]\nInclude = /etc/pacman.d/mirrorlist" >> /etc/pacman.conf
           pacman -Syu --noconfirm base-devel sudo lib32-jack2
           useradd user -G wheel && echo "user ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
