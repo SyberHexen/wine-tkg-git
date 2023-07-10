@@ -67,7 +67,7 @@ if [ "$_NOCCACHE" != "true" ]; then
   fi
 fi
 
-options=(${_makepkg_options[@]} !lto)
+options=(${_makepkg_options[@]})
 
 license=('LGPL')
 depends=(
